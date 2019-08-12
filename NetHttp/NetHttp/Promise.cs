@@ -46,6 +46,7 @@ namespace NetHttp
         async Task<HttpResponseMessage> GetHttpMethod(string url, HttpMethodType method)
         {
             HttpClient client = new HttpClient();
+
             client.DefaultRequestHeaders
                 .Accept
                 .Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue(mediaType));
