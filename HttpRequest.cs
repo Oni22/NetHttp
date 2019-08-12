@@ -12,7 +12,8 @@ namespace NetHttp
         POST,
         GET,
         DELETE,
-        PUT
+        PUT,
+        PATCH
     }
 
     public enum MediaType
