@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Net.Http;
+using System.Net.Http.Headers;
 
 namespace NetHttp
 {
@@ -46,35 +47,44 @@ namespace NetHttp
         /// </summary>
         /// <param name="url"></param>
         /// <returns>Promise</returns>
-        public Promise Get(string url)
+        public async Task<Response> Get(string url)
         {
-            Promise p = new Promise(mediaType, url, HttpMethodType.GET);
-            return p;
+            HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Accept
+                .Add(new MediaTypeWithQualityHeaderValue(mediaType));
+
+            using (HttpResponseMessage res = await client.GetAsync(url))
+            {
+                using (HttpContent content = res.Content)
+                {
+                    string data = await content.ReadAsStringAsync();
+
+                    Response response = new Response();
+                    response.body = data;
+                    response.headers = content.Headers.ContentEncoding.ToList();
+                    return response;
+                }
+            }
         }
 
-        /// <summary>
-        /// Http post request
-        /// </summary>
-        /// <param name="url"></param>
-        /// <param name="data"></param>
-        /// <returns></returns>
-        public Promise Post(string url, string data)
+        public async Task<Response> Post(string url,string body)
         {
-            Promise p = new Promise(mediaType, url, data, HttpMethodType.POST);
-            return p;
-        }
+            HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Accept
+                .Add(new MediaTypeWithQualityHeaderValue(mediaType));
 
-        public Promise Delete(string url)
-        {
-            Promise p = new Promise(mediaType, url, HttpMethodType.DELETE);
-            return p;
-        }
+            using (HttpResponseMessage res = await client.PostAsync(url, new StringContent(body)))
+            {
+                using (HttpContent content = res.Content)
+                {
+                    string data = await content.ReadAsStringAsync();
 
-        public Promise Put(string url, string data)
-        {
-            Promise p = new Promise(mediaType, url, data, HttpMethodType.PUT);
-            return p;
+                    Response response = new Response();
+                    response.body = data;
+                    response.headers = content.Headers.ContentEncoding.ToList();
+                    return response;
+                }
+            }
         }
-
     }
 }
