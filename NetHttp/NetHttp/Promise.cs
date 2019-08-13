@@ -12,7 +12,6 @@ namespace NetHttp
         private object data;
         private Exception err;
 
-
         public Promise(object data)
         {
             this.data = data;
