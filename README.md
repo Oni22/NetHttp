@@ -44,7 +44,7 @@ using NetHttp;
 
 async void DoPromise(){
     
-    Promise prom = await c.Create();
+    Promise prom = await Create();
             
     prom.Then(data =>
     {
@@ -60,19 +60,22 @@ async void DoPromise(){
 using NetHttp;
 ...
 
-Promise prom = await c.Create();
-        
-prom.Then(data1 =>
-{
- 
-  return "I'm from the first Then()";
+async void DoPromise(){
 
-}).Then(data2 => {
-
-  Console.Log(data2); //prints "I'm from the first Then()"
-  return data2;
-  
-});
+    Promise prom = await Create();
+            
+    prom.Then(data1 =>
+    {
+   
+      return "I'm from the first Then()";
+    
+    }).Then(data2 => {
+    
+      Console.Log(data2); //prints "I'm from the first Then()"
+      return data2;
+      
+    });
+}   
 
 ```
 
