@@ -90,11 +90,6 @@ namespace NetHttp
 
         }
 
-        public void Tuple()
-        {
-
-        }
-
         private async Task<HttpResponseMessage> GetHttpMethod(string url, HttpMethodType method, string body = "")
         {
             HttpClient client = new HttpClient();
@@ -116,9 +111,5 @@ namespace NetHttp
             }
         }
 
-        public void TTT()
-        {
-
-        }
     }
 }
