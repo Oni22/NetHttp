@@ -8,17 +8,15 @@ These instructions will get you a copy of the project up and running on your loc
 
 1. Open the folder DLL_v_0.2
 2. Download the DLL file and add it to your project
-3. Add using NetHttp; to the top of your script
 
-### Prerequisites
+***For Unity:***
 
-What things you need to install the software and how to install them
+3. If your'e using Unity drop the Dll anywhere in your project and then import "using NetHttp;" on top of your script. 
+**IMPORTENT: This library uses the async-await feature of C#. For older Unity Versions (<2019) you have to switch the Scripting Runtime Version. To enable this feature, all you need to do is open your player settings (Edit -> Project Settings -> Player) and change “Scripting Runtime Version” to “Experimental (.NET 4.6 Equivalent).***
 
-```
-If your'e using Unity drop the Dll anywhere in your project and then import "using NetHttp;" on top of your script. 
-IMPORTENT: This library uses the async-await feature of C#. For older Unity Versions (<2019) you have to switch the Scripting Runtime Version. To enable this feature, all you need to do is open your player settings (Edit -> Project Settings -> Player) and change “Scripting Runtime Version” to “Experimental (.NET 4.6 Equivalent).
+***For Visual Studio***
 
-```
+3. Go to the Solution Explorer -> Right click on your project -> Add -> Reference -> Browse. Add the Dll from your location.
 
 ### Usage
 
