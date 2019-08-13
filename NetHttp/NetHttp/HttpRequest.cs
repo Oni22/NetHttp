@@ -42,38 +42,33 @@ namespace NetHttp
             }
         }
 
-        /// <summary>
-        /// Http get request
-        /// </summary>
-        /// <param name="url"></param>
-        /// <returns>Promise</returns>
         public async Task<Response> Get(string url)
         {
-            HttpClient client = new HttpClient();
-            client.DefaultRequestHeaders.Accept
-                .Add(new MediaTypeWithQualityHeaderValue(mediaType));
-
-            using (HttpResponseMessage res = await client.GetAsync(url))
-            {
-                using (HttpContent content = res.Content)
-                {
-                    string data = await content.ReadAsStringAsync();
-
-                    Response response = new Response();
-                    response.body = data;
-                    response.headers = content.Headers.ContentEncoding.ToList();
-                    return response;
-                }
-            }
+            return await Execute(url, HttpMethodType.GET);
         }
 
         public async Task<Response> Post(string url,string body)
         {
+            return await Execute(url, HttpMethodType.POST, body);
+        }
+
+        public async Task<Response> Delete(string url)
+        {
+            return await Execute(url, HttpMethodType.DELETE);
+        }
+
+        public async Task<Response> Put(string url, string body)
+        {
+            return await Execute(url, HttpMethodType.PUT, body);
+        }
+
+        private async Task<Response> Execute(string url, HttpMethodType method, string body = "")
+        {
             HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.Accept
                 .Add(new MediaTypeWithQualityHeaderValue(mediaType));
 
-            using (HttpResponseMessage res = await client.PostAsync(url, new StringContent(body)))
+            using (HttpResponseMessage res = await GetHttpMethod(url,method,body))
             {
                 using (HttpContent content = res.Content)
                 {
@@ -81,9 +76,38 @@ namespace NetHttp
 
                     Response response = new Response();
                     response.body = data;
-                    response.headers = content.Headers.ContentEncoding.ToList();
+
+                    HttpHeaders h = content.Headers;
+
+                    foreach (var header in h)
+                    {
+                        response.headers.Add(header.Key, header.Value);
+                    }
+
                     return response;
                 }
+            }
+
+        }
+
+        private async Task<HttpResponseMessage> GetHttpMethod(string url, HttpMethodType method, string body = "")
+        {
+            HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Accept
+                .Add(new MediaTypeWithQualityHeaderValue(mediaType));
+
+            switch (method)
+            {
+                case HttpMethodType.POST:
+                    return await client.PostAsync(url, new StringContent(body));
+                case HttpMethodType.GET:
+                    return await client.GetAsync(url);
+                case HttpMethodType.DELETE:
+                    return await client.DeleteAsync(url);
+                case HttpMethodType.PUT:
+                    return await client.PutAsync(url, new StringContent(body));
+                default:
+                    throw new Exception("This http method doesn't exist or it's currently not supported");
             }
         }
     }
