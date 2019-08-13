@@ -36,20 +36,22 @@ public async Task<Promise> Create()
 }
 ```
 
-2. Call the function and process the data
+2. Call the function and process the data. ***Be sure that you call promises from "async void" functions***
 
 ```
 using NetHttp;
 ...
 
-Promise prom = await c.Create();
-        
-prom.Then(data =>
-{
-  //Write your code here
-  return data1;
-});
-
+async void DoPromise(){
+    
+    Promise prom = await c.Create();
+            
+    prom.Then(data =>
+    {
+      //Write your code here
+      return data1;
+    });
+}
 ```
 
 3. (Optional) You can use chaining to process data in multiple Then() functions
