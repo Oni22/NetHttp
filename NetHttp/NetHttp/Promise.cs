@@ -9,16 +9,24 @@ namespace NetHttp
 
     public class Promise
     {
-        object data;
+        private object data;
+        private Exception err;
 
         public Promise(object data)
         {
             this.data = data;
         }
 
-        public Promise Then(Func<object,object> func)
+        public Promise Then(Func<object, object> func)
         {
-            return new Promise(func(data));
+            data = (func(data));
+            return this;
         }
+
+        public void Then(Action<object> func)
+        {
+            func(data);
+        }
+
     }
 }
