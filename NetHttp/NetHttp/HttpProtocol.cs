@@ -9,7 +9,7 @@ namespace NetHttp
     public class HttpProtocol
     {
         public string body;
-        public Dictionary<string,object> headers;
+        public Dictionary<string, object> headers = new Dictionary<string, object>();
     }
 
     public class Response : HttpProtocol
