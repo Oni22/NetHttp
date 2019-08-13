@@ -15,7 +15,9 @@ These instructions will get you a copy of the project up and running on your loc
 What things you need to install the software and how to install them
 
 ```
-Nothing required
+If your'e using Unity drop the Dll anywhere in your project and then import "using NetHttp;" on top of your script. 
+IMPORTENT: This library uses the async-await feature of C#. For older Unity Versions (<2019) you have to switch the Scripting Runtime Version. To enable this feature, all you need to do is open your player settings (Edit -> Project Settings -> Player) and change “Scripting Runtime Version” to “Experimental (.NET 4.6 Equivalent).
+
 ```
 
 ### Usage
@@ -48,8 +50,7 @@ async void DoPromise(){
             
     prom.Then(data =>
     {
-      //Write your code here
-      return data1;
+      //Handle data here
     });
 }
 ```
@@ -72,7 +73,6 @@ async void DoPromise(){
     }).Then(data2 => {
     
       Console.Log(data2); //prints "I'm from the first Then()"
-      return data2;
       
     });
 }   
