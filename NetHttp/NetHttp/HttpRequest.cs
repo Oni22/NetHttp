@@ -115,5 +115,10 @@ namespace NetHttp
                     throw new Exception("This http method doesn't exist or it's currently not supported");
             }
         }
+
+        public void TTT()
+        {
+
+        }
     }
 }
